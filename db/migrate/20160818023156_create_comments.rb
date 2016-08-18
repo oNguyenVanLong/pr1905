@@ -6,5 +6,6 @@ class CreateComments < ActiveRecord::Migration[5.0]
       t.references :micropost, index: true, foreign_key: true
 
       t.timestamps
+    end
   end
 end
