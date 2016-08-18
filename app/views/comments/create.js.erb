@@ -1,0 +1,4 @@
+<% if @comment.valid? %>
+  $(".comments_micropost").append("<%= j render @comment %>")
+  $('.comment-box').val('')
+<% end %>

@@ -1,0 +1,16 @@
+<div id = "cmt", class="sub_comment">
+  <%= gravatar_for comment.user %>
+  <span class="comment_name">
+    <%= comment.user.name %>
+    </span>
+  <span class="time_comment">
+    <%=  time_ago_in_words comment.created_at %> ago
+  </span>
+  <span class="comment_content">
+    <%= comment.content %>
+  </span>
+  <% if current_user == comment.user %>
+    <%= link_to "Delete", comment,
+      method: :delete, data: {confirm: "You sure?"} %>
+  <% end %>
+</div>

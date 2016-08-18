@@ -15,37 +15,20 @@
         data: {confirm: "You sure?"} %>
     <% end %>
   </p>
-
+  <% if logged_in? %>
     <% if current_user.following? micropost.user or current_user == micropost.user %>
       <div class="comments_micropost">
-        <% micropost.comments.each do |c| %>
-          <% user = User.find_by id: c.user_id %>
-            <div class="sub_comment">
-              <%= gravatar_for user %>
-              <span class="comment_name">
-                <%= user.name %>
-                </span>
-              <span class="time_comment">
-                <%=  time_ago_in_words c.created_at %> ago
-              </span>
-              <span class="comment_content">
-                <%= c.content %>
-              </span>
-              <% if current_user == user %>
-                <%= link_to "Delete", c,
-                  method: :delete, data: {confirm: "You sure?"} %>
-              <% end %>
-            </div>
-        <% end %>
+        <%= render micropost.comments %>
       </div>
       <p>
-        <%= form_for Comment.new do |f| %>
-          <%= hidden_field_tag :user_id, current_user.id %>
-          <%= hidden_field_tag :micropost_id, micropost.id %>
+        <%= form_for Comment.new, remote: true do |f| %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.hidden_field :micropost_id, value: micropost.id %>
           <%= f.text_area :content, class:"comment-box" %>
           <%= f.submit "Comment", class: "btn btn-primary btn-sm
             comment-button" %>
         <% end %>
       </p>
     <% end %>
+  <% end %>
 </li>
